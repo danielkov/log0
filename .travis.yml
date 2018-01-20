@@ -10,4 +10,5 @@ go_import_path: github.com/danielkov/log0
 before_install:
   - go get github.com/mattn/goveralls
 script:
-  - $GOPATH/bin/goveralls -service=travis-ci
+  - go test -v -cover -race -coverprofile=/tmp/coverage.out
+  - $GOPATH/bin/goveralls -coverprofile=/tmp/coverage.out -service=travis-ci
