@@ -64,13 +64,14 @@ The methods will only actually write logs if the logging level is included in th
  - `INFO`
  - `WARNING`
  - `ERROR`
- - `CRITICAL`
+ - `FATAL`
+ - `OFF` - this turns off all logging
 
 There are 3 methods to set the logging level dynamically:
 
 ### `Level()`
 
-This method sets the logging level, which includes the level set and all levels above, e.g.: setting to `DEBUG` will include: `DEBUG`, `TRACE`, `INFO`, `WARNING`, `ERROR` and `CRITICAL`.
+This method sets the logging level, which includes the level set and all levels above, e.g.: setting to `DEBUG` will include: `DEBUG`, `TRACE`, `INFO`, `WARNING`, `ERROR` and `FATAL`.
 
 ```golang
 // comes with logging level of INFO
@@ -84,7 +85,7 @@ func main() {
 
 ### `Include()`
 
-This method adds any number of log levels to the `Levels` of the logger, e.g.: adding `DEBUG` to the default list of `INFO` - `CRITICAL`.
+This method adds any number of log levels to the `Levels` of the logger, e.g.: adding `DEBUG` to the default list of `INFO` - `FATAL`.
 
 ```golang
 var log = log0.Default()
@@ -96,7 +97,7 @@ func main() {
 
 ### `Exclude()`
 
-This method can be used to silence a specific level, by removing it from the `Levels`, e.g.: removing `ERROR` from the default list leaves: `INFO`, `WARNING` and `CRITICAL`.
+This method can be used to silence a specific level, by removing it from the `Levels`, e.g.: removing `ERROR` from the default list leaves: `INFO`, `WARNING` and `FATAL`.
 
 ```golang
 var log = log0.Default()
