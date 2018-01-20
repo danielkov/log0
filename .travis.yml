@@ -1,0 +1,15 @@
+language: go
+sudo: false
+go:
+  - 1.5
+  - 1.6
+  - 1.7
+  - 1.8
+  - tip
+
+go_import_path: github.com/danielkov/log0
+
+before_install:
+  - go get github.com/mattn/goveralls
+script:
+  - $GOPATH/bin/goveralls -service=travis-ci
