@@ -3,6 +3,12 @@
 Simple logging for Go.
 ___
 
+[![Build Status](https://travis-ci.org/danielkov/log0.svg?branch=master)](https://travis-ci.org/danielkov/log0)
+[![Coverage Status](https://coveralls.io/repos/github/danielkov/log0/badge.svg?branch=master)](https://coveralls.io/github/danielkov/log0?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/danielkov/log0)](https://goreportcard.com/report/github.com/danielkov/log0)
+[![godocs](https://img.shields.io/badge/godocs-reference-blue.svg)](https://godoc.org/github.com/danielkov/log0)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
 `log0` is a simple logging adapter that simply provides clean and convenient methods for logging. It uses `bufio.Writer` as the output for the performance benefits of buffered writes as well as compatibility with any `io.Writer`.
 
 The simplest way to use it is via `Default()`, which creates a `Logger` instance that uses `os.Stdout` as the output.
