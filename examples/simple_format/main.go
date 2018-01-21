@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 
 	"github.com/danielkov/log0"
@@ -10,17 +11,24 @@ import (
 var log = log0.New(bufio.NewWriter(os.Stdout), log0.DefaultLevels, true, log0.SimpleFormatter)
 
 func main() {
-	defer log.Close()
-	log.Fine("This should not print.")
-	log.Info("This should print.")
+	defer h(log.Close())
+	h(log.Fine("This should not print."))
+	h(log.Info("This should print."))
 	privateFunc()
 	PublicFunc()
 }
 
 func privateFunc() {
-	log.Warning("Calling log from private function.")
+	h(log.Warning("Calling log from private function."))
 }
 
+// PublicFunc is a function
 func PublicFunc() {
-	log.Error("Calling log from public function.")
+	h(log.Error("Calling log from public function."))
+}
+
+func h(e error) {
+	if e != nil {
+		fmt.Printf("Error: %v", e)
+	}
 }

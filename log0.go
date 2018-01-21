@@ -94,60 +94,61 @@ func (l *Logger) Exclude(levels ...level) {
 }
 
 // Finest is a logger method that logs the message with the Loggers formatting at FNST level
-func (l *Logger) Finest(message string) {
-	l.writeLog(FINEST, message)
+func (l *Logger) Finest(message string) error {
+	return l.writeLog(FINEST, message)
 }
 
 // Fine is a logger method that logs the message with the Loggers formatting at FINE level
-func (l *Logger) Fine(message string) {
-	l.writeLog(FINE, message)
+func (l *Logger) Fine(message string) error {
+	return l.writeLog(FINE, message)
 }
 
 // Debug is a logger method that logs the message with the Loggers formatting at DEBUG level
-func (l *Logger) Debug(message string) {
-	l.writeLog(DEBUG, message)
+func (l *Logger) Debug(message string) error {
+	return l.writeLog(DEBUG, message)
 }
 
 // Trace is a logger method that logs the message with the Loggers formatting at TRACE level
-func (l *Logger) Trace(message string) {
-	l.writeLog(TRACE, message)
+func (l *Logger) Trace(message string) error {
+	return l.writeLog(TRACE, message)
 }
 
 // Info is a logger method that logs the message with the Loggers formatting at INFO level
-func (l *Logger) Info(message string) {
-	l.writeLog(INFO, message)
+func (l *Logger) Info(message string) error {
+	return l.writeLog(INFO, message)
 }
 
 // Warning is a logger method that logs the message with the Loggers formatting at WARN level
-func (l *Logger) Warning(message string) {
-	l.writeLog(WARNING, message)
+func (l *Logger) Warning(message string) error {
+	return l.writeLog(WARNING, message)
 }
 
 // Error is a logger method that logs the message with the Loggers formatting at ERROR level
-func (l *Logger) Error(message string) {
-	l.writeLog(ERROR, message)
+func (l *Logger) Error(message string) error {
+	return l.writeLog(ERROR, message)
 }
 
 // Fatal is a logger method that logs the message with the Loggers formatting at FATAL level
-func (l *Logger) Fatal(message string) {
-	l.writeLog(FATAL, message)
+func (l *Logger) Fatal(message string) error {
+	return l.writeLog(FATAL, message)
 }
 
-func (l *Logger) writeLog(lv level, message string) {
+func (l *Logger) writeLog(lv level, message string) error {
 	if !contains(l.Includes, lv) {
-		return
+		return nil
 	}
 	var fr runtime.Frame
 	if l.ShowTrace {
 		fr = trace(4)
 	}
 	log := Log{lv, time.Now(), message, fr}
-	l.Writer.WriteString(l.Formatter(log))
+	_, err := l.Writer.WriteString(l.Formatter(log))
+	return err
 }
 
 // Close is a method that cleans up after the Logger is no longer needed. Calling Close() is important because it flushes the buffered writer
-func (l *Logger) Close() {
-	l.Writer.Flush()
+func (l *Logger) Close() error {
+	return l.Writer.Flush()
 }
 
 // DefaultFormatter is a Formatter function that returns the log in the format:

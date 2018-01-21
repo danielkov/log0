@@ -9,24 +9,31 @@ import (
 	"github.com/danielkov/log0"
 )
 
-func Formatter(l log0.Log) string {
+func formatter(l log0.Log) string {
 	return fmt.Sprintf("[%s]: %s at %s\n", l.Level, l.Message, l.Time.Format(time.RFC822))
 }
 
-var log = log0.New(bufio.NewWriter(os.Stdout), log0.DefaultLevels, false, Formatter)
+var log = log0.New(bufio.NewWriter(os.Stdout), log0.DefaultLevels, false, formatter)
 
 func main() {
-	defer log.Close()
-	log.Fine("This should not print.")
-	log.Info("This should print.")
+	defer h(log.Close())
+	h(log.Fine("This should not print."))
+	h(log.Info("This should print."))
 	privateFunc()
 	PublicFunc()
 }
 
 func privateFunc() {
-	log.Warning("Calling log from private function.")
+	h(log.Warning("Calling log from private function."))
 }
 
+// PublicFunc is a function
 func PublicFunc() {
-	log.Error("Calling log from public function.")
+	h(log.Error("Calling log from public function."))
+}
+
+func h(e error) {
+	if e != nil {
+		fmt.Printf("Error: %v", e)
+	}
 }

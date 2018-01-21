@@ -1,21 +1,32 @@
 package main
 
-import "github.com/danielkov/log0"
+import (
+	"fmt"
+
+	"github.com/danielkov/log0"
+)
 
 var log = log0.Default()
 
 func main() {
-	defer log.Close()
-	log.Fine("This should not print.")
-	log.Info("This should print.")
+	defer h(log.Close())
+	h(log.Fine("This should not print."))
+	h(log.Info("This should print."))
 	privateFunc()
 	PublicFunc()
 }
 
 func privateFunc() {
-	log.Warning("Calling log from private function.")
+	h(log.Warning("Calling log from private function."))
 }
 
+// PublicFunc is a function
 func PublicFunc() {
-	log.Error("Calling log from public function.")
+	h(log.Error("Calling log from public function."))
+}
+
+func h(e error) {
+	if e != nil {
+		fmt.Printf("Error: %v", e)
+	}
 }

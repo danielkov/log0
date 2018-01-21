@@ -21,7 +21,7 @@ func TestNew(t *testing.T) {
 	log, b := createBufferLogger()
 	log.Error("testing")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	contains("Has the word testing.", got, "testing", t)
 	contains("Shows that it's ERROR level", got, "[ERROR]", t)
 }
@@ -32,7 +32,7 @@ func TestLevel(t *testing.T) {
 	log.Error("error")
 	log.Fatal("fatal")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	assert("Should not contain error.", strings.Contains(got, "error"), false, t)
 	contains("Contains fatal.", got, "fatal", t)
 }
@@ -45,7 +45,7 @@ func TestInclude(t *testing.T) {
 	log.Debug("debug")
 	log.Error("error")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	assert("Should not contain debug.", strings.Contains(got, "debug"), false, t)
 	contains("Contains fine.", got, "fine", t)
 	contains("Contains error by default.", got, "error", t)
@@ -57,7 +57,7 @@ func TestExclude(t *testing.T) {
 	log.Error("error")
 	log.Fatal("fatal")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	assert("Should not contain error.", strings.Contains(got, "error"), false, t)
 	contains("Contains fatal.", got, "fatal", t)
 }
@@ -79,7 +79,7 @@ func TestAllMethods(t *testing.T) {
 	log.Error("error")
 	log.Fatal("fatal")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	contains("Should contain finest.", got, "FNST - finest", t)
 	contains("Should contain fine.", got, "FINE - fine", t)
 	contains("Should contain debug.", got, "DEBUG - debug", t)
@@ -98,7 +98,7 @@ func TestTrace(t *testing.T) {
 	}
 	log.Fatal("name")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	contains("Contains function name.", got, "name - github.com/danielkov/log0_test.TestTrace", t)
 }
 
@@ -113,7 +113,7 @@ func TestSimpleFormatter(t *testing.T) {
 	log.Formatter = log0.SimpleFormatter
 	log.Fatal("fatal")
 	log.Close()
-	got := string(b.Bytes())
+	got := b.String()
 	contains("Contains FATAL.", got, "[FATAL]", t)
 	contains("Contains fatal.", got, "- fatal", t)
 }
